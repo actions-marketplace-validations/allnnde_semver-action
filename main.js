@@ -125,7 +125,9 @@ async function run() {
   core.setOutput("version", `v${version}`);
   core.info(`the previous version is: v${previusliVersion}`);
   core.setOutput("previous-version", `v${previusliVersion}`);
-  console.log(`finished!`);
+  
+  core.setCommandEcho("::set-output name=version::v"+ version)
+  core.setCommandEcho("::set-output name=previous-version::v"+ previusliVersion);
 }
 
 run();
