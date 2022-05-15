@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: versioning
         id: versioning
-        uses: allnnde/semver-action@lastest
-        
+        uses: allnnde/semver-action@v1.0
+
       - name: Get the output time
         run: echo "version ${{ steps.versioning.outputs.version }} previous version version ${{ steps.versioning.outputs.previous-version }}"
         
