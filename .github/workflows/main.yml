@@ -1,0 +1,15 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: run this action for test
+    steps:
+      - name: versioning
+        id: versioning
+        uses: allnnde/hello-world-javascript-action@v1.1
+
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "version ${{ steps.versioning.outputs.version }} previous version version ${{ steps.versioning.outputs.previous-version }}"
+        

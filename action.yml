@@ -1,0 +1,10 @@
+name: 'Hello World'
+description: 'Greet someone and record the time'
+outputs:
+  version:
+    description: 'The value of the new pre-calculated tag'
+  previous-version:
+    description: 'Contains the value of previous tag, before calculating a new one'
+runs:
+  using: 'node16'
+  main: 'main.js'

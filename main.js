@@ -1,5 +1,9 @@
 const { exec } = require('child_process');
 const util = require('util');
+const core = require('@actions/core');
+const github = require('@actions/github');
+
+
 
 var execPromisify = util.promisify(exec);
 
@@ -77,7 +81,7 @@ async function run() {
       version = "0.0.1";
     }
   } else {
-    var data = parseSemanticVersion(res.stdout.trim().replace("\n",""));
+    var data = parseSemanticVersion(res.stdout);
     console.log(data);
 
     var commitMessage = await execute("git log -1 --format=%s");
@@ -88,7 +92,6 @@ async function run() {
     console.log(major);
     console.log(minor);
     console.log(patch);
-
 
     if (commitMessage.stdout.includes("breaking:")) {
       const num =parseInt(major) +1;
@@ -110,6 +113,7 @@ async function run() {
     version = `${major}.${minor}.${patch}`;
   }
   console.log(`the version is: v${version}`);
+  core.setOutput("previous-version", `v${previusliVersion}`);
 }
 
 run();
