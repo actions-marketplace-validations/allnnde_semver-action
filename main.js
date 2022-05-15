@@ -108,12 +108,7 @@ async function run() {
     }
     version = `${major}.${minor}.${patch}`;
   }
-  console.log(`the version is: ${version}`);
-
-
-
-  
-
+  console.log(`the version is: v${version}`);
 }
 
 run();
