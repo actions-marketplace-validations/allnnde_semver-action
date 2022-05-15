@@ -38,9 +38,6 @@ function parseSemanticVersion(description ) {
           hash,
         };
       } catch {
-        core.warning(
-          `Failed to parse git describe output or version can not be determined through: "${description}".`,
-        );
         return false;
       }
     }
