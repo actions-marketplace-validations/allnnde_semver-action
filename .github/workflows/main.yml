@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: versioning
         id: versioning
-        uses: allnnde/hello-world-javascript-action@v1.1
+        uses: allnnde/semver-action@lastest
 
       # Use the output from the `hello` step
       - name: Get the output time
