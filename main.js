@@ -4,16 +4,16 @@ const util = require('util');
 var execPromisify = util.promisify(exec);
 
 async function execute(command) {
-  let  stdout;
-  let  stderr;
+  let stdout;
+  let stderr;
   let err
   try {
     const res = await execPromisify(command);
     stdout = res.stdout;
     stderr = res.stderr;
-    
+
   } catch (error) {
-    err =  error;
+    err = error;
   }
   return { err, stdout, stderr };
 }
@@ -73,12 +73,30 @@ async function run() {
     //some err occurred
     var index = res.err.message.indexOf("cannot describe anything");
     if (index > 0) {
-      version = "v0.0.1";
+      version = "0.0.1";
     }
   } else {
     var data = parseSemanticVersion(res.stdout);
-    console.log(data);
-    version = data.tag;
+
+    var commitMessage = await execute("git log -1 --format=%s");
+    var previusliVersion = data.tag.replace("v", "");
+
+    let { major = 0, minor = 0, patch = 0 } = previusliVersion.split(".");
+
+
+    if (commitMessage.stdout.includes("breaking:")) {
+      major = major++;
+      minor = 0;
+      patch = 0;
+    }
+    else if (commitMessage.stdout.includes("feature:")) {
+      minor = minor++;
+      patch = 0;
+    }
+    else {
+      patch = data.commits;
+    }
+    version = `${major}.${minor}.${patch}`;
   }
   console.log(`the version is: ${version}`);
 
