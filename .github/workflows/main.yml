@@ -3,12 +3,12 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: run this action for test
+    name: run
     steps:
       - name: versioning
         id: versioning
         uses: allnnde/semver-action@v1.0
 
-      - name: Get the output time
+      - name: get versions values
         run: echo "version ${{ steps.versioning.outputs.version }} previous version version ${{ steps.versioning.outputs.previous-version }}"
         
