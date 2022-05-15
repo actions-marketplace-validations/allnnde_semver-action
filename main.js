@@ -27,6 +27,7 @@ descriptionRegex3 = /^v?([\d.]+-\w+\.\d+)-(\d+)-g(\w+)-?(\w+)*/g;
 
 function parseSemanticVersion(description) {
   try {
+    console.log(description);
     const [match, tag, commits, hash] = this.descriptionRegex1.exec(description);
 
     return {
@@ -68,7 +69,7 @@ async function run() {
 
   let version;
   var res = await execute("git describe --tags");
-
+  console.log(res);
   if (res.err) {
     //some err occurred
     var index = res.err.message.indexOf("cannot describe anything");
@@ -76,7 +77,7 @@ async function run() {
       version = "0.0.1";
     }
   } else {
-    var data = parseSemanticVersion(res.stdout);
+    var data = parseSemanticVersion(res.stdout.trim().replace("\n",""));
     console.log(data);
 
     var commitMessage = await execute("git log -1 --format=%s");
