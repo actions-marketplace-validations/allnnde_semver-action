@@ -3,8 +3,15 @@ description: 'calculated new version'
 outputs:
   version:
     description: 'The value of the new pre-calculated tag'
+    value: ${{}}
   previous-version:
     description: 'Contains the value of previous tag, before calculating a new one'
+    value: ${{}}
 runs:
-  using: 'node16'
-  main: 'main.js'
+  using: 'composite'
+  steps:
+  - name: My first step
+    uses: actions/checkout@v3
+  - name: versioning
+    shell: bash
+    run: node main.js
