@@ -8,7 +8,6 @@ jobs:
       - name: versioning
         id: versioning
         uses: allnnde/semver-action@v1.1
-
       - name: get versions values
         run: echo "version ${{ steps.versioning.outputs.version }} previous version version ${{ steps.versioning.outputs.previous-version }}"
         
