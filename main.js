@@ -61,7 +61,16 @@ function parseSemanticVersion(description) {
           hash,
         };
       } catch {
-        return false;
+        const commits = description.split(".")[description.split(".").length - 1];
+        const  match= description;
+        const  tag= description;
+        const  hash= "";
+        return {
+          match,
+          tag,
+          commits,
+          hash,
+        };
       }
     }
   }
@@ -85,23 +94,23 @@ async function run() {
     console.log(data);
 
     var commitMessage = await execute("git log -1 --format=%s");
-    var previusliVersion = data.tag.replace("v", "");
+    var previusliVersion = data.tag.replace("v", "").trim();
 
-    let [major, minor , patch] = previusliVersion.split(".");
+    let [major, minor, patch] = previusliVersion.split(".");
     console.log(previusliVersion);
     console.log(major);
     console.log(minor);
     console.log(patch);
 
     if (commitMessage.stdout.includes("breaking:")) {
-      const num =parseInt(major) +1;
+      const num = parseInt(major) + 1;
       major = num;
       minor = 0;
       patch = 0;
     }
     else if (commitMessage.stdout.includes("feature:")) {
-      const num =parseInt(minor) +1;
-      major = major;      
+      const num = parseInt(minor) + 1;
+      major = major;
       minor = num;
       patch = 0;
     }
@@ -110,7 +119,7 @@ async function run() {
       minor = minor;
       patch = data.commits;
     }
-    version = `${major}.${minor}.${patch}`;
+    version = `${major}.${minor}.${patch}`.trim();
   }
   console.log(`the version is: v${version}`);
   core.setOutput("version", `v${version}`);
