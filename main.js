@@ -1,4 +1,22 @@
 const { exec } = require('child_process');
+const util = require('util');
+
+var execPromisify = util.promisify(exec);
+
+async function execute(command) {
+  let  stdout;
+  let  stderr;
+  let err
+  try {
+    const res = await execPromisify(command);
+    stdout = res.stdout;
+    stderr = res.stderr;
+    
+  } catch (error) {
+    err =  error;
+  }
+  return { err, stdout, stderr };
+}
 
 /**
  * Regex to parse version description into separate fields
@@ -7,9 +25,9 @@ descriptionRegex1 = /^v?([\d.]+)-(\d+)-g(\w+)-?(\w+)*/g;
 descriptionRegex2 = /^v?([\d.]+-\w+)-(\d+)-g(\w+)-?(\w+)*/g;
 descriptionRegex3 = /^v?([\d.]+-\w+\.\d+)-(\d+)-g(\w+)-?(\w+)*/g;
 
-function parseSemanticVersion(description ) {
+function parseSemanticVersion(description) {
   try {
-    const [match, tag, commits, hash] = this.descriptionRegex1.exec(description) ;
+    const [match, tag, commits, hash] = this.descriptionRegex1.exec(description);
 
     return {
       match,
@@ -29,7 +47,7 @@ function parseSemanticVersion(description ) {
       };
     } catch {
       try {
-        const [match, tag, commits, hash] = this.descriptionRegex3.exec(description) ;
+        const [match, tag, commits, hash] = this.descriptionRegex3.exec(description);
 
         return {
           match,
@@ -44,22 +62,49 @@ function parseSemanticVersion(description ) {
   }
 }
 
-let version;
+
+
+async function run() {
+
+  let version;
+  var res = await execute("git describe --tags");
+
+  if (res.err) {
+    //some err occurred
+    var index = res.err.message.indexOf("cannot describe anything");
+    if (index > 0) {
+      version = "v0.0.1";
+    }
+  } else {
+    var data = parseSemanticVersion(res.stdout);
+    console.log(data);
+    version = data.tag;
+  }
+  console.log(`the version is: ${version}`);
+
+}
+
+run();
+
+/*
 exec("git describe --tags", (err, stdout, stderr) => {
   if (err) {
     //some err occurred
     var index = err.message.indexOf("cannot describe anything");
     if (index > 0) {
-      version = "0.0.1";
+      version = "v0.0.1";
     }
   } else {
     var data = parseSemanticVersion(stdout);
-    console.log(data);
+
+    
+
+
     version = stdout;
   }
   console.log(`the version is: ${version}`);
 });
 
 
-
+*/
 
