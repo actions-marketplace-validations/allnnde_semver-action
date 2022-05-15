@@ -113,7 +113,8 @@ async function run() {
     version = `${major}.${minor}.${patch}`;
   }
   console.log(`the version is: v${version}`);
-  core.setOutput("previous-version", `v${previusliVersion}`);
+  //core.setOutput("version", `v${version}`);
+  //core.setOutput("previous-version", `v${previusliVersion}`);
 }
 
 run();
