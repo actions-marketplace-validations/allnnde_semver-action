@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: versioning
         id: versioning
-        uses: allnnde/semver-action@v1.1.1   
+        uses: allnnde/semver-action@v1.1.2   
 
   show:
     runs-on: ubuntu-latest
