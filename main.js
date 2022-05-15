@@ -122,8 +122,8 @@ async function run() {
     version = `${major}.${minor}.${patch}`.trim();
   }
   core.info(`the new version is: v${version}`);
-  core.info(`the previous version is: v${previusliVersion}`);
   core.setOutput("version", `v${version}`);
+  core.info(`the previous version is: v${previusliVersion}`);
   core.setOutput("previous-version", `v${previusliVersion}`);
   console.log(`finished!`);
 }
