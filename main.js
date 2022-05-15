@@ -77,23 +77,33 @@ async function run() {
     }
   } else {
     var data = parseSemanticVersion(res.stdout);
+    console.log(data);
 
     var commitMessage = await execute("git log -1 --format=%s");
     var previusliVersion = data.tag.replace("v", "");
 
-    let { major = 0, minor = 0, patch = 0 } = previusliVersion.split(".");
+    let [major, minor , patch] = previusliVersion.split(".");
+    console.log(previusliVersion);
+    console.log(major);
+    console.log(minor);
+    console.log(patch);
 
 
     if (commitMessage.stdout.includes("breaking:")) {
-      major = major++;
+      const num =parseInt(major) +1;
+      major = num;
       minor = 0;
       patch = 0;
     }
     else if (commitMessage.stdout.includes("feature:")) {
-      minor = minor++;
+      const num =parseInt(minor) +1;
+      major = major;      
+      minor = num;
       patch = 0;
     }
     else {
+      major = major;
+      minor = minor;
       patch = data.commits;
     }
     version = `${major}.${minor}.${patch}`;
