@@ -85,26 +85,3 @@ async function run() {
 }
 
 run();
-
-/*
-exec("git describe --tags", (err, stdout, stderr) => {
-  if (err) {
-    //some err occurred
-    var index = err.message.indexOf("cannot describe anything");
-    if (index > 0) {
-      version = "v0.0.1";
-    }
-  } else {
-    var data = parseSemanticVersion(stdout);
-
-    
-
-
-    version = stdout;
-  }
-  console.log(`the version is: ${version}`);
-});
-
-
-*/
-
