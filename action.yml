@@ -3,14 +3,14 @@ description: 'calculated new version'
 outputs:
   version:
     description: 'The value of the new pre-calculated tag'
-    value: ${{}}
+    value: ${{steps.versioning.outputs.version}}
   previous-version:
     description: 'Contains the value of previous tag, before calculating a new one'
-    value: ${{}}
+    value: ${{steps.versioning.outputs.previous-version}}
 runs:
   using: 'composite'
   steps:
-  - name: My first step
+  - name: checkout
     uses: actions/checkout@v3
   - name: versioning
     shell: bash
