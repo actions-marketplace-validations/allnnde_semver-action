@@ -1,13 +1,21 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  calculate:
     runs-on: ubuntu-latest
     name: run
+    outputs:
+      version: ${{steps.versioning.outputs.version}}
     steps:
       - name: versioning
         id: versioning
-        uses: allnnde/semver-action@v1.1.1
+        uses: allnnde/semver-action@v1.1.1   
+
+  show:
+    runs-on: ubuntu-latest
+    needs: calculate
+    name: run
+    steps:
       - name: get versions values
-        run: echo version ${{ steps.versioning.outputs.version }}! previous version ${{ steps.versioning.outputs.previous-version }}!!
+        run: echo version ${{needs.calculate.outputs.version}}!
         
