@@ -124,6 +124,7 @@ async function run() {
   console.log(`the version is: v${version}`);
   core.setOutput("version", `v${version}`);
   core.setOutput("previous-version", `v${previusliVersion}`);
+  console.log(`finished!`);
 }
 
 run();
