@@ -128,10 +128,10 @@ async function run() {
   }
   core.setCommandEcho(true);  
 
-  core.info(`the new version is: v${version}`);
-  core.setOutput("version", `v${version}`);
-  core.info(`the previous version is: v${previusliVersion}`);
-  core.setOutput("previous-version", `v${previusliVersion}`);
+  core.info(`the new version is: v1.0.0b`);
+  core.setOutput("version", `v1.0.0b`);
+  core.info(`the previous version is: v1.0.0b`);
+  core.setOutput("previous-version", `v1.0.0b`);
 }
 
 run();
