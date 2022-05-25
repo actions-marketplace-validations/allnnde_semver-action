@@ -17,6 +17,7 @@ async function execute(command) {
     stderr = res.stderr;
 
   } catch (error) {
+    core.error(`error executing ${command}: ${error}`);
     err = error;
   }
   return { err, stdout, stderr };
@@ -31,7 +32,6 @@ descriptionRegex3 = /^v?([\d.]+-\w+\.\d+)-(\d+)-g(\w+)-?(\w+)*/g;
 
 function parseSemanticVersion(description) {
   try {
-    console.log(description);
     const [match, tag, commits, hash] = this.descriptionRegex1.exec(description);
 
     return {
@@ -81,8 +81,10 @@ function parseSemanticVersion(description) {
 async function run() {
 
   let version;
-  var res = await execute("git describe --tags");
-  console.log(res);
+  
+  core.info(`execute git describe`);
+  var res = await execute("git describe --tags");  
+  core.info(`execute git describe result: ${res}`);
   if (res.err) {
     //some err occurred
     var index = res.err.message.indexOf("cannot describe anything");
@@ -103,18 +105,21 @@ async function run() {
     console.log(patch);
 
     if (commitMessage.stdout.includes("breaking:")) {
+      core.info(`the version is major`);
       const num = parseInt(major) + 1;
       major = num;
       minor = 0;
       patch = 0;
     }
     else if (commitMessage.stdout.includes("feature:")) {
+      core.info(`the version is minor`);
       const num = parseInt(minor) + 1;
       major = major;
       minor = num;
       patch = 0;
     }
     else {
+      core.info(`the version is patch`);
       major = major;
       minor = minor;
       patch = data.commits;
