@@ -1,6 +1,8 @@
 name: 'awasome semver action'
 description: 'calculated new version'
-icon: 'book'
+branding:
+  icon: 'book'  
+  color: 'red'
 outputs:
   version:
     description: 'The value of the new pre-calculated tag'
