@@ -1,4 +1,4 @@
-name: 'semver action'
+name: 'awasome semver action'
 description: 'calculated new version'
 outputs:
   version:
